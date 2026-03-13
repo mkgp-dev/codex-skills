@@ -106,8 +106,8 @@ const PasswordPair = z.object({
 
 The official materials are not perfectly uniform:
 
-- `packages/zod.mdx` marks `.superRefine()` as deprecated in favor of `.check()`
-- `api.mdx` still documents `.superRefine()` directly and notes that `.check()` is lower-level
+- some materials mark `.superRefine()` as deprecated in favor of `.check()`
+- others still document `.superRefine()` directly and describe `.check()` as the lower-level alternative
 
 House guidance for this skill:
 

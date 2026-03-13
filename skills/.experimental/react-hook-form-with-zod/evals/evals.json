@@ -1,0 +1,115 @@
+{
+  "skill_name": "react-hook-form-with-zod",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Build a typed login form with React Hook Form. Use current best practices, include safe `defaultValues`, and show accessible inline error rendering for `email` and `password` fields. Only add Zod if it materially improves this simple form.",
+      "expected_output": "Produces a modern RHF login form with solid defaults and accessible field errors, without forcing Zod into a simple case.",
+      "files": [],
+      "expectations": [
+        "Shows a clean RHF baseline with complete `defaultValues`.",
+        "Does not force `zodResolver(schema)` into the answer unless it is justified.",
+        "Includes accessible field error rendering such as `aria-invalid` and `role=\"alert\"`."
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Review this React Hook Form form and improve it with brief explanations:\n\n```tsx\nimport { useForm } from \"react-hook-form\";\n\nexport function SignupForm() {\n  const { register, handleSubmit, formState: { errors } } = useForm();\n\n  return (\n    <form onSubmit={handleSubmit(console.log)}>\n      <input {...register(\"email\", { required: true })} />\n      <input type=\"number\" {...register(\"age\")} />\n      {errors.email && <p>Email is required</p>}\n      <button type=\"submit\">Submit</button>\n    </form>\n  );\n}\n```",
+      "expected_output": "Finds plain RHF issues first, improves typing and accessibility, and avoids injecting Zod unless there is a real need.",
+      "files": [],
+      "expectations": [
+        "Improves the RHF setup with better typing or `defaultValues` where relevant.",
+        "Improves error rendering rather than leaving hard-coded messages disconnected from RHF state.",
+        "Does not add Zod by default when the prompt is a plain RHF review."
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Show a current pattern for a checkout form with nested shipping fields and a dynamic list of line items using React Hook Form. I need guidance on `useFieldArray`, field naming, list keys, and the main pitfalls to avoid.",
+      "expected_output": "Produces an RHF setup that uses `useFieldArray` correctly and warns about common array-field mistakes without forcing schema validation.",
+      "files": [],
+      "expectations": [
+        "Uses dot-path field registration that matches the nested value shape.",
+        "Uses `field.id` as the key for `useFieldArray` items.",
+        "Mentions current array-helper guidance instead of recommending whole-array `setValue(...)` as the main pattern."
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "I am building reusable controlled field components for a date picker and a custom currency input with React Hook Form. Explain when to use `useController` versus `Controller`, how to avoid double registration, and how to normalize values cleanly before validation.",
+      "expected_output": "Explains `useController` for reusable controlled fields, `Controller` for inline bridges, avoids double registration, and keeps normalization at the RHF boundary unless a schema adds real value.",
+      "files": [],
+      "expectations": [
+        "Explains a meaningful distinction between `useController` and `Controller` rather than treating them as interchangeable.",
+        "Explicitly warns against combining `register(...)` with `Controller` on the same input.",
+        "Prefers RHF-side normalization before recommending schema transforms."
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "Review this React Hook Form component for performance. It uses `watch()` at the form root to drive several child components, and one child only needs the `shippingMethod` value. Show the better pattern and explain when `useFormState` or `getFieldState` would help too.",
+      "expected_output": "Pushes the code toward narrower subscriptions, prefers `useWatch` for the child-specific dependency, and uses state-scoping guidance where appropriate.",
+      "files": [],
+      "expectations": [
+        "Prefers `useWatch` over broad `watch()` usage for isolated child dependencies.",
+        "Explains when `useFormState` or `getFieldState` is a better fit than broad `formState` reads.",
+        "Keeps the answer centered on RHF subscription behavior rather than unrelated React advice."
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "Design a nested checkout form with React Hook Form where deeply nested address and payment fields should not require prop drilling through five layers. Show the best-practice use of `FormProvider` and `useFormContext`, and explain when explicit props are still better.",
+      "expected_output": "Uses RHF context for deep form composition, makes the provider boundary clear, and explains the tradeoff against explicit prop passing.",
+      "files": [],
+      "expectations": [
+        "Uses `FormProvider` and `useFormContext` correctly for deep nesting.",
+        "Warns against overusing form context when prop passing would stay clearer.",
+        "Does not turn the answer into generic React context advice unrelated to RHF."
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "I need React Hook Form guidance for `reset`, `trigger`, `setValue`, `setError`, and `clearErrors` in a profile form that loads async defaults, supports manual validation of a dependent field, and receives server-side errors after submit. Show the recommended flow and the main pitfalls.",
+      "expected_output": "Shows coherent RHF mutation and error-handling usage with the right boundaries between reset, targeted validation, targeted updates, and async/server feedback.",
+      "files": [],
+      "expectations": [
+        "Explains `reset(...)` in relation to default values and async-loaded form state.",
+        "Uses `trigger(...)` selectively rather than recommending broad form-wide validation by default.",
+        "Uses `setError(...)` and `clearErrors(...)` deliberately for async or server feedback."
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "Review this React Hook Form + Zod snippet and modernize it with brief explanations:\n\n```tsx\nimport { useForm } from \"react-hook-form\";\nimport { zodResolver } from \"@hookform/resolvers/zod\";\nimport { z } from \"zod\";\n\nconst schema = z.object({\n  email: z.string().email(\"Invalid email\"),\n  age: z.string().transform(Number).pipe(z.number().min(18)),\n});\n\nexport function SignupForm() {\n  const { register, handleSubmit, formState: { errors } } = useForm({\n    resolver: zodResolver(schema),\n  });\n\n  return (\n    <form onSubmit={handleSubmit(console.log)}>\n      <input {...register(\"email\")} />\n      <input type=\"number\" {...register(\"age\")} />\n      {errors.email && <p>{errors.email.message}</p>}\n      {errors.age && <p>{errors.age.message}</p>}\n      <button type=\"submit\">Submit</button>\n    </form>\n  );\n}\n```",
+      "expected_output": "Finds the RHF + Zod integration issues, updates stale Zod guidance, and prefers input-level normalization for numeric input.",
+      "files": [],
+      "expectations": [
+        "Modernizes stale Zod guidance instead of preserving `z.string().email()` as the default pattern.",
+        "Recommends `valueAsNumber` or another explicit RHF normalization strategy for the numeric field.",
+        "Adds or discusses missing `defaultValues` if the answer addresses RHF form-state stability."
+      ]
+    },
+    {
+      "id": 9,
+      "prompt": "Give me a React Hook Form + Zod pattern where the browser validates on the client, the server reuses the same schema, and API validation errors are mapped back into the form after submit. I want one root error for submission failures and field-specific errors where available.",
+      "expected_output": "Shows shared-schema validation, a non-throwing server validation path, and RHF `setError` usage for both root and field errors.",
+      "files": [],
+      "expectations": [
+        "Reuses the Zod schema on the server rather than inventing a second validation source.",
+        "Uses `safeParse` or an equivalent non-throwing validation path for expected request failures.",
+        "Maps server errors back with field-specific `setError(...)` calls and a root-level submission error."
+      ]
+    },
+    {
+      "id": 10,
+      "prompt": "Act as a senior reviewer for this PR comment: 'We should use Controller for every input, validate with both register rules and Zod just to be safe, and call error.flatten() on the server before sending field errors back.' Review that advice, rank the problems by severity, and replace it with current React Hook Form + Zod guidance.",
+      "expected_output": "Rejects broad misuse of `Controller`, unnecessary duplicated validation, and stale Zod error guidance while replacing them with current integration advice.",
+      "files": [],
+      "expectations": [
+        "Pushes back on using `Controller` for every input as the default.",
+        "Explains why duplicating the same validation rules in RHF and Zod is usually a maintenance smell.",
+        "Replaces instance-based error formatting guidance with current Zod error helpers."
+      ]
+    }
+  ]
+}
