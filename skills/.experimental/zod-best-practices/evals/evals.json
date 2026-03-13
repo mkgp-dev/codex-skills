@@ -1,0 +1,126 @@
+{
+  "skill_name": "zod-best-practices",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Review and modernize this Zod code using current Zod best practices. Explain each change briefly.\n\n```ts\nimport { z } from \"zod\";\n\nenum Role {\n  Admin = \"admin\",\n  Member = \"member\"\n}\n\nconst UserSchema = z.object({\n  email: z.string().email(),\n  role: z.nativeEnum(Role),\n  tags: z.array(z.string()).nonempty(),\n  name: z.string({ required_error: \"Name required\" }),\n}).strict();\n\nexport function validateUser(input: unknown) {\n  const result = UserSchema.safeParse(input);\n  if (!result.success) {\n    return result.error.flatten();\n  }\n  return result.data;\n}\n```",
+      "expected_output": "Rewrites the schema with current Zod patterns and explains deprecated or legacy APIs that were replaced.",
+      "files": [],
+      "expectations": [
+        "Replaces deprecated or legacy APIs such as z.string().email(), z.nativeEnum(), required_error, .strict(), or error.flatten() with current Zod guidance.",
+        "Explains the modern alternatives instead of only outputting rewritten code.",
+        "Keeps the answer focused on Zod best practices rather than framework-specific advice."
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Act as a senior reviewer. I have a Zod 4 PR that adds these schemas:\n\n```ts\nimport { z } from \"zod\";\n\nconst Base = z.object({ id: z.string().uuid() });\nconst Profile = z.object({ email: z.string().email(), website: z.string().url().optional() });\nconst User = Base.merge(Profile).passthrough();\nconst Settings = z.object({ theme: z.string().default(\"system\").optional() });\n```\n\nList the concrete best-practice issues, rank them by severity, and show corrected snippets only where they materially help.",
+      "expected_output": "Finds the important Zod-specific issues, prioritizes them, and gives precise fixes with current APIs.",
+      "files": [],
+      "expectations": [
+        "Flags .merge() and legacy object mode choices with current replacements.",
+        "Flags deprecated string method formats and prefers top-level format helpers.",
+        "Mentions the behavioral implication of defaults inside optional properties if it is relevant."
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "I need a current Zod pattern for validating nested form input from an untrusted request body. I want to avoid exceptions in normal control flow, customize a few error messages, and return either a nested error structure or a shallow field-error map depending on the UI. Show the recommended approach and call out any deprecated APIs I should avoid.",
+      "expected_output": "Recommends safeParse-based validation, the unified error API, and the current top-level error-formatting helpers with the right tradeoffs.",
+      "files": [],
+      "expectations": [
+        "Uses safeParse or safeParseAsync for expected validation failures.",
+        "Recommends the unified error API and avoids message/required_error/errorMap as defaults.",
+        "Distinguishes between treeifyError and flattenError for different UI needs."
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Design a Zod schema set for a blogging API. Requirements: authors have branded IDs, posts are discriminated by status (`draft` or `published`), published posts require `publishedAt`, drafts do not, tags must be a non-empty list of strings, and create/update payloads should be derived from a reusable base schema rather than duplicated. Show the schemas and inferred types, then explain the design choices briefly.",
+      "expected_output": "Produces reusable, modern core Zod schemas that use branded IDs, discriminated unions, derived variants, and current helper choices.",
+      "files": [],
+      "expectations": [
+        "Uses modern schema composition instead of duplicating large object literals.",
+        "Uses discriminated unions correctly for the status variants.",
+        "Demonstrates branded types or equivalent domain-safe typing without drifting into unrelated framework guidance."
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "Review this Zod code and tell me what is wrong, ordered by severity:\n\n```ts\nimport { z } from \"zod\";\n\nconst SearchParams = z.object({\n  page: z.string().transform(Number).pipe(z.number().min(1)).default(\"1\"),\n  includeArchived: z.coerce.boolean(),\n  sort: z.string().optional(),\n});\n```\n\nI care about correctness, maintainability, and surprising runtime behavior.",
+      "expected_output": "Finds the real Zod-specific issues, including default semantics and risky coercion behavior, and proposes better modern alternatives.",
+      "files": [],
+      "expectations": [
+        "Flags the mismatch between transform output and the string default value.",
+        "Mentions that z.coerce.boolean follows JavaScript truthiness and can surprise people.",
+        "Keeps the review centered on Zod semantics and concrete replacements."
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "I have a recursive category tree and a result envelope from my API. Show me a modern Zod design for both. The category tree is recursive. The result envelope is a tagged union with success and error variants. I also want the parsed result objects to be readonly where that makes sense.",
+      "expected_output": "Uses z.lazy for recursion, discriminated unions for the envelope, and readonly where it fits, with modern syntax and clear type inference.",
+      "files": [],
+      "expectations": [
+        "Uses z.lazy for the recursive structure.",
+        "Uses z.discriminatedUnion for the tagged result envelope.",
+        "Includes readonly usage only where it is semantically justified."
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "Modernize this legacy validation utility and explain why each change matters:\n\n```ts\nimport { z } from \"zod\";\n\nconst ConfigSchema = z.object({\n  mode: z.nativeEnum({ DEV: \"dev\", PROD: \"prod\" } as const),\n  apiBase: z.string().url(),\n  retries: z.number().safe(),\n  extras: z.record(z.string()),\n}).passthrough();\n\nexport function parseConfig(input: unknown) {\n  return ConfigSchema.parse(input, {\n    error: () => \"bad config\"\n  });\n}\n```",
+      "expected_output": "Replaces stale APIs and behavior assumptions with current Zod guidance, explaining both syntax and semantic changes.",
+      "files": [],
+      "expectations": [
+        "Replaces z.nativeEnum and the single-argument z.record pattern with current forms.",
+        "Calls out the legacy object-mode API and parse-time error precedence issue.",
+        "Mentions the changed meaning of number.safe or recommends a clearer modern numeric constraint."
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "Give me a modern Zod pattern for validating untrusted query params where numbers come in as strings, a date may be missing, and one field needs custom normalization before validation. I need both the accepted input type and the parsed output type.",
+      "expected_output": "Uses a clear mix of coercion, preprocess or transform only where justified, and shows input/output typing correctly.",
+      "files": [],
+      "expectations": [
+        "Uses z.input and z.output or clearly distinguishes accepted input from parsed output.",
+        "Uses coercion, preprocess, transform, or pipe intentionally rather than mixing them arbitrarily.",
+        "Keeps the result focused on boundary validation and current Zod patterns."
+      ]
+    },
+    {
+      "id": 9,
+      "prompt": "I need to validate a nested request body and return errors to two different consumers: one wants a nested structure mirroring the schema, the other wants a shallow field map. Show the recommended Zod approach and tell me which older helpers I should stop using.",
+      "expected_output": "Explains current top-level error formatting utilities and maps them cleanly to the two consumers while identifying the older deprecated helpers.",
+      "files": [],
+      "expectations": [
+        "Uses z.treeifyError for nested error structures and z.flattenError for shallow field maps.",
+        "Explicitly identifies instance-based format or flatten usage as legacy or deprecated guidance.",
+        "Explains when each error shape is appropriate."
+      ]
+    },
+    {
+      "id": 10,
+      "prompt": "I am trying to design reusable schemas for a performance-sensitive frontend. Should I use regular zod or zod/mini? Also show a small example of how you would structure the shared schemas so I do not rebuild them repeatedly.",
+      "expected_output": "Gives a balanced recommendation about zod versus zod/mini and includes practical schema reuse guidance without overclaiming performance benefits.",
+      "files": [],
+      "expectations": [
+        "Does not recommend zod/mini by default without a real bundle-size reason.",
+        "Shows module-level or shared-schema reuse instead of rebuilding schemas in hot paths.",
+        "Keeps the tradeoff grounded in actual ergonomics and bundle concerns."
+      ]
+    },
+    {
+      "id": 11,
+      "prompt": "A teammate asked for help wiring a complex form library around a Zod schema with field arrays, resolver setup, and UI-specific error rendering. Answer as this skill should: help with the Zod part, but stay inside scope.",
+      "expected_output": "Stays focused on the Zod schema concerns and boundaries of this skill instead of turning into a full framework integration tutorial.",
+      "files": [],
+      "expectations": [
+        "Keeps the answer centered on schema design, parsing, or error-shape concerns.",
+        "Avoids drifting into detailed framework-specific form wiring steps.",
+        "Makes the scope boundary clear without refusing to help on the Zod portion."
+      ]
+    }
+  ]
+}
