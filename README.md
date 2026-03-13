@@ -4,7 +4,7 @@ A repository for building, refining, and organizing reusable Codex skills.
 
 ## Overview
 
-This project is designed to grow into a maintainable collection of high-quality skills that can be authored, improved, benchmarked, and categorized over time. The repository currently uses a simple structure with curated and experimental skill.
+This project is designed to grow into a maintainable collection of high-quality skills that can be authored, improved, benchmarked, and categorized over time. The repository currently uses a simple structure with curated and experimental skills.
 
 ## Available Skills
 
@@ -19,6 +19,7 @@ This project is designed to grow into a maintainable collection of high-quality 
 | Skill | Description |
 | --- | --- |
 | [zod-best-practices](skills/.experimental/zod-best-practices/) | Core Zod schema design, validation, migration, and review guidance for TypeScript applications. |
+| [react-hook-form-with-zod](skills/.experimental/react-hook-form-with-zod/) | RHF-first best-practice guidance for `useForm`, field subscriptions, controlled components, field arrays, form context, and optional Zod integration when schema validation or shared parsing is useful. |
 
 ## Install Skills
 
@@ -38,16 +39,20 @@ This lists the skills available in this repository without installing them.
 npx skills add mkgp-dev/codex-skills --skill zod-best-practices
 ```
 
+```bash
+npx skills add mkgp-dev/codex-skills --skill react-hook-form-with-zod
+```
+
 ### Install a specific skill for Codex
 
 ```bash
-npx skills add mkgp-dev/codex-skills --skill zod-best-practices -a codex
+npx skills add mkgp-dev/codex-skills --skill react-hook-form-with-zod -a codex
 ```
 
 ### Install to your global skills directory
 
 ```bash
-npx skills add mkgp-dev/codex-skills --skill zod-best-practices -a codex -g
+npx skills add mkgp-dev/codex-skills --skill react-hook-form-with-zod -a codex -g
 ```
 
 ## License
