@@ -2,6 +2,9 @@
 
 A repository for building, refining, and organizing reusable Codex skills.
 
+> [!NOTE]
+> These skills are based on my current tech stack. I want coding agents to write code using these libraries while following the best practices I’ve gained through experience. I’m still experimenting with the output, but I hope it works well.
+
 ## Overview
 
 This project is designed to grow into a maintainable collection of high-quality skills that can be authored, improved, benchmarked, and categorized over time. The repository currently uses a simple structure with curated and experimental skills.
@@ -20,40 +23,11 @@ This project is designed to grow into a maintainable collection of high-quality 
 | --- | --- |
 | [zod-best-practices](skills/.experimental/zod-best-practices/) | Core Zod schema design, validation, migration, and review guidance for TypeScript applications. |
 | [react-hook-form-with-zod](skills/.experimental/react-hook-form-with-zod/) | RHF-first best-practice guidance for `useForm`, field subscriptions, controlled components, field arrays, form context, and optional Zod integration when schema validation or shared parsing is useful. |
+| [zustand-state-management](skills/.experimental/zustand-state-management/) | Zustand v5 best-practice guidance for state boundaries, store design, selectors, rerender control, persistence, middleware, and Next.js-safe store setup. |
 
 ## Install Skills
 
-This repository can be consumed with the Vercel `skills` CLI.
-
-### List available skills
-
-```bash
-npx skills add mkgp-dev/codex-skills --list
-```
-
-This lists the skills available in this repository without installing them.
-
-### Install with options
-
-```bash
-npx skills add mkgp-dev/codex-skills --skill zod-best-practices
-```
-
-```bash
-npx skills add mkgp-dev/codex-skills --skill react-hook-form-with-zod
-```
-
-### Install a specific skill for Codex
-
-```bash
-npx skills add mkgp-dev/codex-skills --skill react-hook-form-with-zod -a codex
-```
-
-### Install to your global skills directory
-
-```bash
-npx skills add mkgp-dev/codex-skills --skill react-hook-form-with-zod -a codex -g
-```
+For a copy-paste-friendly command list, see [INSTALLATION.md](./INSTALLATION.md).
 
 ## License
 

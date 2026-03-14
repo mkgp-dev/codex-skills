@@ -1,0 +1,104 @@
+{
+  "skill_name": "zustand-state-management",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Show a current Zustand v5 pattern for a small typed cart store in a React TypeScript app. Keep the store minimal, include intent-based actions, and explain what should stay out of the store.",
+      "expected_output": "Produces a typed Zustand store with explicit actions, keeps derived or ephemeral data out of the store, and explains the state boundary clearly.",
+      "files": [],
+      "expectations": [
+        "Uses a TypeScript-first Zustand v5 store pattern.",
+        "Explains why some UI or derived state should stay local or be derived instead of stored.",
+        "Uses selectors rather than subscribing the component to the whole store by default."
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Review this Zustand component for rerender issues and modernize it with brief explanations:\n\n```tsx\nconst useSearchStore = create((set) => ({\n  value: '',\n  setValue: (value) => set({ value }),\n}))\n\nfunction SearchBox() {\n  const [value, setValue] = useSearchStore((state) => [state.value, state.setValue])\n  return <input value={value} onChange={(e) => setValue(e.target.value)} />\n}\n```",
+      "expected_output": "Finds the unstable selector output problem in Zustand v5 and replaces it with current selector guidance.",
+      "files": [],
+      "expectations": [
+        "Calls out the unstable array selector output as a v5 problem.",
+        "Prefers separate selectors or `useShallow` for a bundled selector result.",
+        "Keeps the review focused on Zustand subscription behavior."
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "I have a Next.js App Router app and want to persist a sidebar preference and auth token with Zustand. Show the best-practice setup and the main hydration pitfalls to avoid.",
+      "expected_output": "Uses a per-request or provider-scoped store pattern, explains hydration concerns, and applies persistence deliberately rather than as a global module store shortcut.",
+      "files": [],
+      "expectations": [
+        "Avoids recommending a single module-global store as the default Next.js SSR pattern.",
+        "Discusses hydration gating, delayed rehydration, or equivalent SSR-safe persistence handling.",
+        "Separates persistence guidance from React Server Component misuse."
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Design a Zustand store for a dashboard that has filters, selected widgets, and server-fetched analytics data. Decide what should live in Zustand versus a server-state tool, and explain the reasoning.",
+      "expected_output": "Keeps client workflow state in Zustand and pushes fetched analytics data toward a server-state solution unless there is a strong reason not to.",
+      "files": [],
+      "expectations": [
+        "Explicitly says some of the problem is better handled outside Zustand.",
+        "Keeps shared client workflow state in Zustand where appropriate.",
+        "Avoids turning Zustand into the primary remote-cache layer."
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "Show a current slices pattern for a growing Zustand store in TypeScript, and explain when slices are justified versus when they are premature ceremony.",
+      "expected_output": "Uses a modern slices example, warns against overengineering, and keeps middleware at the combined-store level.",
+      "files": [],
+      "expectations": [
+        "Explains that slices are for scaling a store, not the default starting point.",
+        "Shows middleware applied at the combined store rather than inside each slice creator.",
+        "Uses a TypeScript-aware pattern or explicitly discusses typing considerations."
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "I need a Zustand store with an async `loadUser` action. Show a good pattern for loading, ready, and error states, and explain when this store should stop short of becoming a generic API cache.",
+      "expected_output": "Implements a reasonable async action pattern while drawing a boundary between local client workflow state and server-state caching responsibilities.",
+      "files": [],
+      "expectations": [
+        "Shows async actions as acceptable in Zustand.",
+        "Includes explicit status or error handling only where it serves the UI.",
+        "Warns against using Zustand as a generic server-state cache."
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "Modernize this older Zustand guidance and rank the problems by severity: 'Use create with shallow as the second argument, use zustand/context for scoped stores, and persist the entire store so you never lose anything.'",
+      "expected_output": "Corrects stale v4-era advice, identifies removed APIs or risky persistence guidance, and replaces it with v5-safe patterns.",
+      "files": [],
+      "expectations": [
+        "Rejects the old custom-equality approach on `create` in v5.",
+        "Replaces `zustand/context` with React context plus a vanilla store pattern.",
+        "Pushes back on persisting the entire store by default."
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "Review this TypeScript Zustand store and improve it with brief explanations:\n\n```ts\nimport { create } from 'zustand'\n\nexport const useProfileStore = create((set, get) => ({\n  user: get().user,\n  theme: 'dark',\n  setTheme: (theme: string) => set({ theme }),\n}))\n```",
+      "expected_output": "Finds the TypeScript and store-creation issues, avoids unsafe `get()` usage during initialization, and replaces the snippet with a proper typed pattern.",
+      "files": [],
+      "expectations": [
+        "Calls out `get()` during initial store construction as a problem.",
+        "Introduces an explicit typed store shape using current v5 TypeScript patterns.",
+        "Avoids preserving the broken initialization approach."
+      ]
+    },
+    {
+      "id": 9,
+      "prompt": "I need to subscribe to a single field in a vanilla Zustand store from non-React code. Show the current best-practice pattern and explain when `subscribeWithSelector` is worth adding.",
+      "expected_output": "Uses a vanilla store with `subscribeWithSelector` for a granular subscription and explains the boundary between React selectors and external subscriptions.",
+      "files": [],
+      "expectations": [
+        "Uses `createStore` for the vanilla store example.",
+        "Uses `subscribeWithSelector` for granular non-React subscriptions.",
+        "Explains when that middleware is justified instead of defaulting to it everywhere."
+      ]
+    }
+  ]
+}
