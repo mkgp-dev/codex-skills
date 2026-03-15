@@ -1,0 +1,82 @@
+{
+  "skill_name": "tanstack-query-best-practices",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Review this TanStack Query snippet and modernize it with brief explanations:\n\n```tsx\nconst { data, isLoading } = useQuery(['todos'], () => fetchTodos(userId), {\n  cacheTime: 1000 * 60 * 10,\n  keepPreviousData: true,\n  onSuccess: () => console.log('loaded'),\n})\n```\n",
+      "expected_output": "Finds the v5 migration issues, replaces stale APIs and signatures, and explains the key correctness problems clearly.",
+      "files": [],
+      "expectations": [
+        "Replaces the positional hook call with the single-object signature.",
+        "Replaces `cacheTime` with `gcTime` and updates `keepPreviousData` guidance to current placeholder-data behavior.",
+        "Calls out that query callbacks like `onSuccess` were removed from queries in v5."
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Design a TanStack Query setup for a dashboard that has server-fetched analytics, local date-range filters, a selected widget tab, and a modal for editing one widget. Decide what belongs in TanStack Query versus local or client state, and show the main query key and QueryClient defaults you would use.",
+      "expected_output": "Keeps remote analytics in TanStack Query, keeps local UI state out of the cache, and proposes sensible defaults and query-key structure.",
+      "files": [],
+      "expectations": [
+        "Explicitly separates server state from local UI state instead of placing everything in TanStack Query.",
+        "Uses a query key that includes the changing analytics dependencies.",
+        "Explains `staleTime` as the main freshness control instead of misusing `gcTime`."
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Show a current TanStack Query mutation pattern for updating a todo title. I want instant UI feedback, safe rollback on error, and a clean explanation of when invalidation alone is enough versus when `setQueryData` is worth it.",
+      "expected_output": "Shows a mutation lifecycle with optimistic update discipline and explains the tradeoff between invalidation and direct cache writes.",
+      "files": [],
+      "expectations": [
+        "Cancels relevant queries before a cache-level optimistic write.",
+        "Includes rollback or equivalent recovery behavior for mutation failure.",
+        "Explains when simple targeted invalidation is preferable to manual cache patching."
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "I have a paginated projects list and an infinite activity feed in TanStack Query. Show the best-practice setup for both, including how to keep page transitions smooth, how to avoid fetchNextPage conflicts, and when `maxPages` is useful.",
+      "expected_output": "Uses current pagination and infinite-query patterns with placeholder data, explicit page params, and safe next-page guards.",
+      "files": [],
+      "expectations": [
+        "Uses `placeholderData` or `keepPreviousData` helper for paginated transitions instead of the removed boolean option.",
+        "Includes explicit `initialPageParam` and `getNextPageParam` guidance for the infinite query.",
+        "Warns against calling `fetchNextPage` while a conflicting fetch is already in flight."
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "Explain the current TanStack Query SSR and hydration flow for a React or Preact app that prefetches two queries on the server. I want the safe QueryClient lifetime, the hydration boundary, and the main mistake that causes an immediate client refetch after hydration.",
+      "expected_output": "Explains the modern SSR pipeline with per-request clients, dehydration, HydrationBoundary, and server-side staleTime guidance.",
+      "files": [],
+      "expectations": [
+        "Uses a fresh server-side QueryClient per request or preload phase.",
+        "Uses `HydrationBoundary` rather than the removed `Hydrate` API.",
+        "Mentions that leaving `staleTime` at `0` can cause immediate post-hydration refetching."
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "Show a TypeScript-friendly TanStack Query pattern where a query config is reused between `useQuery`, `prefetchQuery`, and `getQueryData`. Also explain when `skipToken` or adapter-specific equivalents help for conditional queries.",
+      "expected_output": "Uses option-helper patterns that preserve inference and discusses type-safe conditional querying without falling back to vague generics.",
+      "files": [],
+      "expectations": [
+        "Uses `queryOptions` or the adapter-equivalent helper for reusable typed config.",
+        "Explains the inference benefit for `prefetchQuery` or `getQueryData` reuse.",
+        "Mentions `skipToken` only as a conditional-query aid rather than as generic filler."
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "I am using TanStack Query outside React too. Summarize the shared best practices across Angular, Vue, Svelte, Solid, and Preact, and only call out framework-specific differences where they materially affect correctness.",
+      "expected_output": "Stays centered on shared TanStack Query rules while correctly naming the few adapter-specific differences that matter.",
+      "files": [],
+      "expectations": [
+        "Leads with shared server-state, key, invalidation, and default-behavior guidance instead of turning into five separate tutorials.",
+        "Calls out at least one real framework-specific correctness note such as Vue reactivity, Svelte function-wrapped options, or Angular's experimental adapter.",
+        "Avoids collapsing the answer into React-only guidance."
+      ]
+    }
+  ]
+}
