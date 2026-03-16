@@ -1,0 +1,71 @@
+{
+  "skill_name": "shadcn-ui-best-practices",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Review this shadcn-style UI snippet and modernize it with brief explanations:\n\n```tsx\n<Dialog>\n  <DialogTrigger><Button>Delete</Button></DialogTrigger>\n  <DialogContent className=\"z-50 bg-white dark:bg-zinc-950\">\n    <p className=\"text-lg font-bold\">Delete project?</p>\n    <p className=\"text-gray-500 dark:text-gray-400\">This action cannot be undone.</p>\n    <div className=\"mt-4 flex space-x-2\">\n      <Button className=\"bg-red-600 text-white\">Delete</Button>\n      <Button className=\"border\">Cancel</Button>\n    </div>\n  </DialogContent>\n</Dialog>\n```\n",
+      "expected_output": "Finds the composition and styling problems, restores accessible dialog structure, and replaces brittle styling with shadcn-friendly patterns.",
+      "files": [],
+      "expectations": [
+        "Adds `DialogHeader` and `DialogTitle` or equivalent accessible title structure.",
+        "Calls out the manual `z-index`, raw colors, and `space-x-*` usage as avoidable.",
+        "Prefers variants and semantic tokens over one-off visual overrides."
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Build a settings side panel with shadcn/ui for notification preferences. I need a trigger button, a Sheet, grouped controls, labels, descriptions, and clear guidance on when Sheet is better than Dialog or Popover.",
+      "expected_output": "Uses `Sheet` intentionally, keeps the structure accessible, and shows grouped settings controls with maintainable composition.",
+      "files": [],
+      "expectations": [
+        "Uses `Sheet` with `SheetHeader`, `SheetTitle`, and `SheetDescription`.",
+        "Explains why a side panel is a better fit than `Dialog` or `Popover` for this case.",
+        "Uses `Field`, `FieldGroup`, or similar structured control composition instead of loose spacing wrappers."
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Explain the best-practice Tailwind v4 theming setup for shadcn/ui. I want the CSS variable shape, `@theme inline`, semantic token usage, and what not to do when customizing colors.",
+      "expected_output": "Explains the modern Tailwind v4 token flow and discourages fragile customization shortcuts.",
+      "files": [],
+      "expectations": [
+        "Uses `@theme inline` in the explanation or example.",
+        "Keeps theme variables in a central CSS entry and maps them to semantic token utilities.",
+        "Warns against scattered raw colors or duplicated `dark:` overrides."
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Show a React Hook Form example using shadcn/ui for a bug report form with title, severity, and description fields. I want accessible labels, descriptions, error states, and a maintainable field layout.",
+      "expected_output": "Uses structured field wrappers and exposes invalid states accessibly.",
+      "files": [],
+      "expectations": [
+        "Uses `Field` and `FieldGroup` around the controls.",
+        "Sets `data-invalid` on the field wrapper and `aria-invalid` on invalid controls.",
+        "Uses the right component for the severity choice instead of plain buttons."
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "I have a dashboard page where every feature folder copied its own `Card`, `Badge`, and `Separator` so the team could tweak spacing and colors per screen. Propose a better shadcn/ui organization and explain what should stay in `components/ui` versus feature-level files.",
+      "expected_output": "Re-centers the architecture on shared primitives plus feature composition and explains why copy-forking primitives hurts maintainability.",
+      "files": [],
+      "expectations": [
+        "Keeps primitives in shared `components/ui` or an equivalent shared package.",
+        "Places screen-specific composition in feature-level files rather than forking primitives.",
+        "Calls out copy-paste customization as a maintainability problem."
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "A shadcn project uses both radix-style `asChild` examples and base-style `render` examples in the same code review. Explain how you would review trigger composition safely without assuming the APIs are interchangeable.",
+      "expected_output": "Shows awareness of the base-vs-radix split and avoids giving a one-size-fits-all fix.",
+      "files": [],
+      "expectations": [
+        "Explicitly distinguishes base and radix trigger composition APIs.",
+        "Warns against assuming one trigger API works for both bases.",
+        "Keeps the review centered on correctness rather than generic style advice."
+      ]
+    }
+  ]
+}

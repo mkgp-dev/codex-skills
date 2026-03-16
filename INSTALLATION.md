@@ -22,6 +22,12 @@ npx skills add mkgp-dev/codex-skills --skill zod-best-practices
 npx skills add mkgp-dev/codex-skills --skill react-hook-form-with-zod
 ```
 
+### `shadcn-ui-best-practices`
+
+```bash
+npx skills add mkgp-dev/codex-skills --skill shadcn-ui-best-practices
+```
+
 ### `tanstack-query-best-practices`
 
 ```bash
