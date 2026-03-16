@@ -23,6 +23,7 @@ This project is designed to grow into a maintainable collection of high-quality 
 | --- | --- |
 | [zod-best-practices](skills/.experimental/zod-best-practices/) | Core Zod schema design, validation, migration, and review guidance for TypeScript applications. |
 | [react-hook-form-with-zod](skills/.experimental/react-hook-form-with-zod/) | RHF-first best-practice guidance for `useForm`, field subscriptions, controlled components, field arrays, form context, and optional Zod integration when schema validation or shared parsing is useful. |
+| [shadcn-ui-best-practices](skills/.experimental/shadcn-ui-best-practices/) | Best-practice guidance for shadcn/ui composition, forms, theming, Tailwind v4 integration, accessibility, organization, and maintainable UI customization. |
 | [tanstack-query-best-practices](skills/.experimental/tanstack-query-best-practices/) | TanStack Query v5 best-practice guidance for server-state boundaries, `QueryClient` setup, query keys, invalidation, mutations, pagination, hydration, and framework-aware usage across Angular, Preact, React, Solid, Svelte, and Vue. |
 | [zustand-state-management](skills/.experimental/zustand-state-management/) | Zustand v5 best-practice guidance for state boundaries, store design, selectors, rerender control, persistence, middleware, and Next.js-safe store setup. |
 
