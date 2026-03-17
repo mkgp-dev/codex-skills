@@ -75,4 +75,4 @@ If the user is mainly solving remote-data synchronization, keep the Zustand advi
 
 ## Provenance
 
-This skill is authored from the bundled Zustand documentation snapshot targeting Zustand v5.0.11, including the official guides for TypeScript, slices, `useShallow`, `persist`, Next.js, SSR and hydration, testing, and the v5 migration guide.
+This skill is authored from the bundled Zustand documentation snapshot targeting Zustand v5.0.12, including the official guides for TypeScript, slices, `useShallow`, `persist`, Next.js, SSR and hydration, testing, and the v5 migration guide.
