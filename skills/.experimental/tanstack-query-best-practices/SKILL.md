@@ -77,4 +77,4 @@ If the user is mainly solving local UI state, form drafts, or component composit
 
 ## Provenance
 
-This skill is authored from the bundled TanStack Query materials, using the provided documentation snapshot and examples centered on TanStack Query v5.90.26 and the supplied Angular, Preact, React, Solid, Svelte, and Vue sources.
+This skill is authored from the bundled TanStack Query materials, using the provided documentation snapshot and examples centered on TanStack Query v5.96.1 and the supplied Angular, Preact, React, Solid, Svelte, and Vue sources.

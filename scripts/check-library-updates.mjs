@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 
-const ISSUE_TITLE = "Library version updates";
+const ISSUE_TITLE = "Library major version updates";
 const ISSUE_MARKER = "<!-- codex-skills:library-update-tracker -->";
 const TRACKED_LIBRARIES_FILE =
   process.env.LIBRARY_CHECKER_TRACKED_FILE ?? "libraries.json";
@@ -36,14 +36,14 @@ async function main() {
     }),
   );
 
-  const outdatedLibraries = results
-    .filter((result) => result.updateType !== "none")
+  const majorUpdates = results
+    .filter((result) => result.updateType === "major")
     .sort((left, right) => left.packageName.localeCompare(right.packageName));
 
-  console.log(JSON.stringify({ outdatedLibraries }, null, 2));
+  console.log(JSON.stringify({ majorUpdates }, null, 2));
 
-  const issueBody = buildIssueBody(outdatedLibraries);
-  await syncTrackingIssue({ outdatedLibraries, issueBody });
+  const issueBody = buildIssueBody(majorUpdates);
+  await syncTrackingIssue({ majorUpdates, issueBody });
 }
 
 async function readTrackedLibraries(filePath) {
@@ -89,15 +89,15 @@ async function fetchLatestVersion(packageName) {
   return latestVersion;
 }
 
-function buildIssueBody(outdatedLibraries) {
+function buildIssueBody(majorUpdates) {
   const generatedAt = new Date().toISOString();
 
-  if (outdatedLibraries.length === 0) {
+  if (majorUpdates.length === 0) {
     return [
       ISSUE_MARKER,
-      "# Library version updates",
+      "# Library major version updates",
       "",
-      "All tracked libraries are up to date.",
+      "There are currently no major library updates to report.",
       "",
       `Generated at: \`${generatedAt}\``,
       "",
@@ -105,16 +105,16 @@ function buildIssueBody(outdatedLibraries) {
     ].join("\n");
   }
 
-  const rows = outdatedLibraries.map(
+  const rows = majorUpdates.map(
     ({ packageName, trackedVersion, latestVersion, updateType }) =>
       `| \`${packageName}\` | \`${trackedVersion}\` | \`${latestVersion}\` | ${updateType} |`,
   );
 
   return [
     ISSUE_MARKER,
-    "# Library version updates",
+    "# Library major version updates",
     "",
-    "The following tracked libraries have newer npm releases available.",
+    "The following tracked libraries have newer npm releases with a major-version change.",
     "",
     "| Package | Tracked | Latest | Update |",
     "| --- | --- | --- | --- |",
@@ -126,12 +126,12 @@ function buildIssueBody(outdatedLibraries) {
   ].join("\n");
 }
 
-async function syncTrackingIssue({ outdatedLibraries, issueBody }) {
+async function syncTrackingIssue({ majorUpdates, issueBody }) {
   const issue = await findTrackingIssue();
 
-  if (outdatedLibraries.length === 0) {
+  if (majorUpdates.length === 0) {
     if (!issue) {
-      console.log("No outdated libraries and no existing tracking issue.");
+      console.log("No major library updates and no existing tracking issue.");
       return;
     }
 
