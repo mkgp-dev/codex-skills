@@ -34,6 +34,12 @@ npx skills add mkgp-dev/codex-skills --skill shadcn-ui-best-practices
 npx skills add mkgp-dev/codex-skills --skill tanstack-query-best-practices
 ```
 
+### `tanstack-router-best-practices`
+
+```bash
+npx skills add mkgp-dev/codex-skills --skill tanstack-router-best-practices
+```
+
 ### `zustand-state-management`
 
 ```bash

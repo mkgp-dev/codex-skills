@@ -1,0 +1,82 @@
+{
+  "skill_name": "tanstack-router-best-practices",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Review this TanStack Router route layout and recommend a maintainable organization strategy for a growing React app with authenticated pages, a dashboard area, and settings pages. I want guidance on whether to use file-based routing, pathless layouts, route directories, or code-based routing.",
+      "expected_output": "Prefers file-based routing, explains where pathless layouts and route directories help, and avoids turning code-based routing into the default without justification.",
+      "files": [],
+      "expectations": [
+        "Recommends file-based routing as the default for a new React app.",
+        "Uses pathless layouts or route-group boundaries for shared auth or shell behavior.",
+        "Explains when code-based or virtual routes are justified instead of presenting them as the default."
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Design a TanStack Router search-param strategy for a products page with `page`, `sort`, `category`, and `query`. I want typed validation, sensible fallback behavior, and loader keys that only reload when the data-driving URL state changes.",
+      "expected_output": "Uses `validateSearch`, keeps malformed URL input from breaking the app unnecessarily, and scopes `loaderDeps` to only the fields the loader uses.",
+      "files": [],
+      "expectations": [
+        "Validates search params instead of reading raw search data directly.",
+        "Uses fallback or default behavior intentionally rather than surfacing raw parse errors by default.",
+        "Avoids using the entire search object as `loaderDeps` when only some fields drive the fetch."
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Show the best-practice TanStack Router + TanStack Query pattern for a `/posts` route that needs critical data before render and slower sidebar data after the page shell appears. Explain which work belongs in the loader, which belongs in Query hooks, and how to avoid duplicate data ownership.",
+      "expected_output": "Uses the loader to warm the Query cache for critical data, treats slower work as deferred or prefetched, and keeps Router cache and Query cache responsibilities clear.",
+      "files": [],
+      "expectations": [
+        "Uses `queryClient.ensureQueryData` or an equivalent loader warm-up for critical data.",
+        "Keeps the component reading data from Query hooks instead of duplicating the same dataset in loader data.",
+        "Explains how to defer or prefetch slower non-critical data without blocking the main route render."
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Modernize this TanStack Router navigation pattern: we reuse plain object literals for links, build URLs by string concatenation, and use buttons with `navigate` for normal page-to-page navigation. I want a cleaner typed approach.",
+      "expected_output": "Replaces ad hoc navigation with `Link`, `linkOptions`, and structured `params` or `search` usage while keeping imperative navigation only for side effects.",
+      "files": [],
+      "expectations": [
+        "Prefers `Link` over imperative navigation for normal user-driven page changes.",
+        "Uses `linkOptions` for reusable typed navigation objects.",
+        "Avoids string-built URLs in favor of `to`, `params`, and `search` fields."
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "Explain the best-practice not-found and auth-guard setup for TanStack Router. I need route protection, redirect-after-login behavior, and a clear difference between `errorComponent` and `notFoundComponent`.",
+      "expected_output": "Places auth checks in `beforeLoad`, uses `redirect` with the current location, and uses `notFoundComponent` or `notFound()` for missing-path and missing-resource cases instead of deprecated APIs.",
+      "files": [],
+      "expectations": [
+        "Places the guard in `beforeLoad` rather than in leaf components by default.",
+        "Uses a redirect search param or equivalent to preserve the intended destination after login.",
+        "Distinguishes missing-resource not-found handling from general error-boundary handling."
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "Show a type-safe TanStack Router pattern for a split route component that needs route params, validated search data, and a loading indicator driven by router state. I want the modern approach, not stale class-based APIs.",
+      "expected_output": "Registers the router, uses route APIs or `getRouteApi`, narrows with `from` when needed, and uses `useRouterState` instead of reading `router.state` directly.",
+      "files": [],
+      "expectations": [
+        "Mentions router registration for top-level type inference.",
+        "Uses `getRouteApi` or route-bound hooks appropriately for split files.",
+        "Avoids direct component reads of `router.state` in favor of reactive hooks."
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "Recommend a TanStack Router code-splitting strategy for a large file-based app. I want to know when automatic code splitting is enough, when `.lazy.tsx` files are useful, and which route config must stay eager.",
+      "expected_output": "Prefers automatic code splitting when the bundler supports it, keeps critical route config eager, and uses `.lazy.tsx` only for non-critical route UI when needed.",
+      "files": [],
+      "expectations": [
+        "Explains that loaders, validation, and route context should stay in the eager route file.",
+        "Prefers automatic code splitting over manual splitting when the stack supports it.",
+        "Notes that the root route is not a candidate for lazy splitting."
+      ]
+    }
+  ]
+}
