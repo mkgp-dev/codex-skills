@@ -26,6 +26,7 @@ This project is designed to grow into a maintainable collection of high-quality 
 | [shadcn-ui-best-practices](skills/.experimental/shadcn-ui-best-practices/) | Best-practice guidance for shadcn/ui composition, forms, theming, Tailwind v4 integration, accessibility, organization, and maintainable UI customization. |
 | [tanstack-query-best-practices](skills/.experimental/tanstack-query-best-practices/) | TanStack Query v5 best-practice guidance for server-state boundaries, `QueryClient` setup, query keys, invalidation, mutations, pagination, hydration, and framework-aware usage across Angular, Preact, React, Solid, Svelte, and Vue. |
 | [tanstack-router-best-practices](skills/.experimental/tanstack-router-best-practices/) | TanStack Router v1 best-practice guidance for route-tree design, typed navigation, search params, loaders, auth guards, not-found handling, code splitting, and Query integration in React apps. |
+| [changelog-maintenance](skills/.experimental/changelog-maintenance/) | Best-practice guidance for creating, reviewing, and maintaining high-signal `CHANGELOG.md` entries with clear version structure, semver-aware organization, and noise filtering. |
 | [zustand-state-management](skills/.experimental/zustand-state-management/) | Zustand v5 best-practice guidance for state boundaries, store design, selectors, rerender control, persistence, middleware, and Next.js-safe store setup. |
 
 ## Installation

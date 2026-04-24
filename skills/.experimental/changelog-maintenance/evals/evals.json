@@ -1,0 +1,60 @@
+{
+  "skill_name": "changelog-maintenance",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Review this weak changelog entry and rewrite it using maintainable best practices:\n\n```md\n## [1.6.0]\n- updated docs\n- fixed some issues\n- added changelog skill\n- more cleanup\n```\n\nExplain the important problems briefly before showing the corrected version.",
+      "expected_output": "Identifies vague wording, missing date, poor grouping, and noisy filler, then rewrites the entry into clearer versioned sections.",
+      "files": [],
+      "expectations": [
+        "Calls out vague bullets such as `updated docs` or `fixed some issues` as low-signal changelog language.",
+        "Adds a dated version heading or explains that released versions should be dated.",
+        "Rewrites the entry into structured sections such as `Added`, `Changed`, and `Fixed`."
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Create a changelog entry from this release work list for version 2.3.0 on 2026-04-24:\n\n- Added CSV export for reports\n- Refactored export helpers\n- Added tests for export flow\n- Fixed an issue where the export modal closed during download\n- Updated screenshots in the docs\n- Deprecated the legacy `/reports/download` endpoint in favor of `/reports/exports`\n\nKeep only high-signal changes and organize them professionally.",
+      "expected_output": "Filters out low-value internal noise, preserves the notable changes, and produces a concise versioned changelog entry.",
+      "files": [],
+      "expectations": [
+        "Keeps the new feature, the bug fix, and the deprecation.",
+        "Drops or compresses refactor, tests, and screenshot-only documentation churn unless explicitly justified.",
+        "Uses a clear version heading with structured subsections."
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "I have an existing changelog with an `Unreleased` section. Move the completed work into a release entry for `1.8.0` dated `2026-04-24`, keep `Unreleased` in place, and preserve good formatting:\n\n```md\n# Changelog\n\n## [Unreleased]\n\n### Added\n- Added role-based access controls for project admins.\n\n### Fixed\n- Fixed duplicate webhook deliveries during retries.\n```\n",
+      "expected_output": "Promotes the unreleased changes into a new dated version entry, preserves the unreleased placeholder, and keeps the formatting maintainable.",
+      "files": [],
+      "expectations": [
+        "Keeps an empty `Unreleased` section after releasing.",
+        "Creates a new `1.8.0` section dated `2026-04-24`.",
+        "Preserves the `Added` and `Fixed` grouping instead of flattening the entry."
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "A teammate asked for 'release notes' but what we really need is a repository changelog entry. Explain the difference briefly, then write the changelog version of this input:\n\n- Big exciting redesign!\n- Faster performance everywhere\n- Removed support for API v1\n- Updated marketing screenshots\n- Patched a token validation vulnerability\n",
+      "expected_output": "Distinguishes changelog maintenance from promotional release notes and converts the input into a factual, maintainable changelog entry.",
+      "files": [],
+      "expectations": [
+        "Explains that changelogs are concise repository history rather than promotional announcement copy.",
+        "Calls out the API removal as a removal or breaking-change-adjacent item rather than burying it in generic changes.",
+        "Calls out the security fix explicitly in a `Security` section or equivalent."
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "Review this proposed changelog entry and tell me what should change, ordered by severity:\n\n```md\n## [3.0.0] - 2026-04-24\n\n### Changed\n- Refactored auth internals\n- Removed password login\n- Better security\n- Migrated some endpoints\n- Fixed bugs\n```\n\nI care about clarity, maintainability, and making breaking changes obvious.",
+      "expected_output": "Prioritizes the hidden breaking change and vague bullets, then shows a clearer structure with more appropriate sections and wording.",
+      "files": [],
+      "expectations": [
+        "Flags `Removed password login` as a breaking or high-severity change that should not be buried in `Changed`.",
+        "Flags vague bullets like `Better security` and `Fixed bugs` as low-value wording.",
+        "Recommends clearer sections such as `Removed`, `Changed`, `Fixed`, or `Security`."
+      ]
+    }
+  ]
+}
