@@ -1,0 +1,71 @@
+{
+  "skill_name": "preact-best-practices",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I’m building a Preact component and I’m unsure whether to use signals or hooks for shared state. Given this code, refactor it to avoid double sources of truth and explain the reasoning:\n\n```tsx\nimport { signal } from \"@preact/signals\";\n\nconst theme = signal<\"light\" | \"dark\">(\"light\");\n\nexport function ThemeToggle() {\n  const [localTheme, setLocalTheme] = useState(theme.value);\n\n  return (\n    <button\n      onClick={() => {\n        const next = localTheme === \"light\" ? \"dark\" : \"light\";\n        setLocalTheme(next);\n        theme.value = next;\n      }}\n    >\n      Toggle\n    </button>\n  );\n}\n```\n",
+      "expected_output": "Explains signals vs hooks tradeoffs, removes duplicated local state, and returns a Preact-first refactor using a single owner for the value.",
+      "files": [],
+      "expectations": [
+        "Explicitly explains why maintaining both signal and hook state is a double source of truth.",
+        "Refactors to a single owner (either signal-only or hook-only) and uses it consistently.",
+        "Mentions when hooks are still preferred (purely local state)."
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "My Preact SSR page throws hydration mismatch warnings because it renders the current time on the server. Show a Preact-friendly fix and explain why it works.\n\n```tsx\nexport function Now() {\n  return <p>{new Date().toISOString()}</p>;\n}\n```\n",
+      "expected_output": "Moves client-only time generation into an effect and renders a deterministic placeholder on the server/first paint.",
+      "files": [],
+      "expectations": [
+        "Explains the mismatch cause: server markup differs from the first client render.",
+        "Uses a stable placeholder for the initial render.",
+        "Uses an effect to set the client-only value after mount."
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Write a small Preact Testing Library test for this component that clicks the button and asserts the visible outcome. Avoid brittle selectors.\n\n```tsx\nexport function Counter() {\n  const [count, setCount] = useState(0);\n  return (\n    <div>\n      <button onClick={() => setCount((c) => c + 1)}>Increment</button>\n      <output aria-label=\"count\">{count}</output>\n    </div>\n  );\n}\n```\n",
+      "expected_output": "Produces a test using user-centric queries (role/name/label) and verifies clicking increments the visible count.",
+      "files": [],
+      "expectations": [
+        "Uses `@testing-library/preact` and a user-event style click.",
+        "Queries by role/name/label rather than class or querySelector.",
+        "Asserts the output changes from 0 to 1 after click."
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "I have a Preact app and someone suggested switching the whole codebase to `preact/compat` by default to avoid migration issues. Is that the right default? Show a safer integration pattern if we only need one React-only widget library.",
+      "expected_output": "Rejects compat-by-default, explains tradeoffs, and provides an isolated compat boundary pattern for the React-only dependency.",
+      "files": [],
+      "expectations": [
+        "States that `preact/compat` should not be the default architecture choice.",
+        "Explains explicit tradeoffs (ecosystem compatibility vs size/debugging/assumption risks).",
+        "Shows compat isolated to a boundary module/component rather than app-wide default."
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "This Preact list has weird state jumps after filtering and reordering. Refactor with the minimal fix and explain why:\n\n```tsx\nexport function TodoList(props: { items: { id: string; title: string }[] }) {\n  return (\n    <ul>\n      {props.items.map((it, idx) => (\n        <li key={idx}>{it.title}</li>\n      ))}\n    </ul>\n  );\n}\n```\n",
+      "expected_output": "Replaces index key with a stable identity key and explains why index keys break under reorder/insert/remove operations.",
+      "files": [],
+      "expectations": [
+        "Replaces `key={idx}` with a stable domain key (`key={it.id}`).",
+        "Explains behavioral risk from index keys when list order changes.",
+        "Keeps the fix minimal and focused."
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "Find the bug in this Preact effect and patch it:\n\n```tsx\nexport function Clock() {\n  const [now, setNow] = useState(Date.now());\n\n  useEffect(() => {\n    setInterval(() => setNow(Date.now()), 1000);\n  }, []);\n\n  return <time>{new Date(now).toISOString()}</time>;\n}\n```\n\nI only want a fix that addresses leak/rerender safety, not extra refactors.",
+      "expected_output": "Adds interval cleanup and explains the leak risk from missing cleanup while keeping changes minimal.",
+      "files": [],
+      "expectations": [
+        "Adds `clearInterval` cleanup in the effect return function.",
+        "Mentions why missing cleanup can leak timers or duplicate work.",
+        "Avoids unrelated refactors."
+      ]
+    }
+  ]
+}

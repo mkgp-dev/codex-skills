@@ -46,6 +46,12 @@ npx skills add mkgp-dev/codex-skills --skill tanstack-router-best-practices
 npx skills add mkgp-dev/codex-skills --skill changelog-maintenance
 ```
 
+### `preact-best-practices`
+
+```bash
+npx skills add mkgp-dev/codex-skills --skill preact-best-practices
+```
+
 ### `zustand-state-management`
 
 ```bash
